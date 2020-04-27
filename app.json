@@ -1,11 +1,9 @@
 {
   "expo": {
-    "name": "locationtask",
-    "slug": "locationtask",
+    "name": "Background Location",
+    "slug": "lotation-app",
     "platforms": [
-      "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,13 +14,23 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
+    "description": "location test",
+    "android": {
+      "package": "com.luancmadev.location",
+      "config": {
+        "googleMaps": {
+          "apiKey":"AIzaSyCZ9NDGi3Bne6YvYvCEmFWycdFlkOOtg5w"
+        } 
+      },
+      "versionCode": 2
     }
   }
 }
+

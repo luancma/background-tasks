@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Platform, Text, View, StyleSheet, PermissionsAndroid } from 'react-native';
+import { Platform, Text, View, StyleSheet, PermissionsAndroid, Dimensions, StatusBar } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as TaskManager from 'expo-task-manager'
 import * as Permissions from 'expo-permissions';
+import MapView from 'react-native-maps';
+
 
 
 
 const LOCATION_TASK_NAME = 'background-location-task';
 
 
-export default function App() {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+export default function App() { 
 
 
   async function getLocationAsync() {
@@ -23,18 +23,24 @@ export default function App() {
     }
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Balanced,
-      timeInterval: 100
     });
-
   }
 
   useEffect(() => {
     getLocationAsync();
-  });
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.paragraph}>App</Text>
+      <StatusBar backgroundColor="red" /> 
+      <View style={styles.container}>
+        <MapView 
+          followsUserLocation={true}
+          showsUserLocation={true}
+          showsMyLocationButton={true}
+          style={styles.mapStyle} />
+      </View>
+
     </View>
   );
 }
@@ -42,22 +48,20 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
   },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    textAlign: 'center',
+  mapStyle: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
-})
+});
 
 TaskManager.defineTask(LOCATION_TASK_NAME, ({ data: { locations }, error }) => {
   if (error) {
     console.log(error.message)
     return;
   }
-  console.log('Received new locations', locations);
+  console.log('Received new locations', locations); 
 });
