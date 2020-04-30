@@ -64,4 +64,5 @@ TaskManager.defineTask(LOCATION_TASK_NAME, ({ data: { locations }, error }) => {
     return;
   }
   console.log('Received new locations', locations); 
+  Axios.get('https://jsonplaceholder.typicode.com/posts').then(value => console.log(value))
 });
